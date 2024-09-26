@@ -128,6 +128,25 @@ class BattleDogs {
     tRENEROFCKA() {
         this.trainingLvl += 1;
     }
+
+    takeDamage(damage) {
+        this.health -= damage;
+        if (this.health <= 0) {
+            console.log(`${this.name} умер`);
+            return true;
+        } else {
+            console.log(`${this.name} получил ${damage}, осталось ${this.health}`);
+        }
+    }
+
+    attack(target) {
+        console.log(`${this.name} атакует ${target.name}`);
+        if (this.trainingLvl > 0) {
+            target.takeDamage(Math.floor(this.damage * (1 + (this.trainingLvl / 10))));
+        } else {
+            target.takeDamage(this.damage);
+        }
+    }
 }
 
 // класс оружия
@@ -190,6 +209,5 @@ const Sasha = new BattleDogs('Sasha');
 const Anna = new BattleDogs('Anna');
 Ivan.addDog(Sasha);
 Ivan.getInfoDogs();
-console.log(Ivan)
 Ivan.dogTraining(Sasha);
-console.log(Ivan)
+Sasha.attack(Artem);
