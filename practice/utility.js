@@ -57,7 +57,11 @@ const backToClass = (nameToFind) => {
   const entries = Object.entries(found);
   // [[k1,v1] [k2, v2]]
   for ([key, value] of entries) {
-    if ()
+    if (_.isObject(value)) {
+      classObj[key] = value.map((item) => backToClass(item));
+    } else {
+      classObj[key] = value;
+    }
   }
 }
 export default setTribe;
