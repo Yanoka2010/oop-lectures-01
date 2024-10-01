@@ -1,9 +1,9 @@
-//import setTribe from "../utility.js";
-import SigmaBoss from "../practice/classes/sigma.js";
-import TumbaUmba from "../practice/classes/tumba.js";
-import Tools from "../practice/classes/tools.js";
-import BattleDogs from "../practice/classes/battle.js";
-import Weapon from "../practice/classes/weapon.js";
+// import setTribe from "../utility.js";
+import SigmaBoss from '../practice/classes/sigma.js';
+import TumbaUmba from '../practice/classes/tumba.js';
+import Tools from '../practice/classes/tools.js';
+import BattleDogs from '../practice/classes/battle.js';
+import Weapon from '../practice/classes/weapon.js';
 
 const Artem = new SigmaBoss('Artem');
 const Ivan = new TumbaUmba('Ivan');
