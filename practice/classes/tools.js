@@ -1,6 +1,7 @@
 class Tools {
   constructor(name) {
     this.name = name;
+    this.className = 'Tools';
     this.durability = 1 + Math.round(Math.random() * 20);
     this.damage = 1 + Math.round(Math.random() * 2);
   }

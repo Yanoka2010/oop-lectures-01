@@ -1,6 +1,7 @@
 class BattleDogs {
   constructor(name) {
     this.name = name;
+    this.className = 'BattleDog';
     this.health = 5 + Math.round(Math.random() * 25);
     this.trainingLvl = 0;
     this.damage = 5;

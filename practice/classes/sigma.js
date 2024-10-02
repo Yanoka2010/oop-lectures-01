@@ -4,7 +4,7 @@ class SigmaBoss extends TribeMember {
   constructor(name) {
     // ф-ция для наследования родителя
     super(name);
-    this.className = 'sigmaboss';
+    this.className = 'SigmaBoss';
     this.weapons = [];
     if (this.iq > 10) {
       this.iq -= 8;

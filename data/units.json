@@ -1,0 +1,42 @@
+{
+  "alive": [
+    {
+      "name": "Maxim",
+      "age": 8,
+      "health": 20,
+      "damage": 1,
+      "iq": 39,
+      "className": "TumbaUmba",
+      "tools": [],
+      "dogs": [],
+      "secretPotato": "25 кг картошки"
+    },
+    {
+      "name": "Den",
+      "age": 70,
+      "health": 56,
+      "damage": 8,
+      "iq": 10,
+      "className": "SigmaBoss",
+      "weapons": []
+    },
+    {
+      "name": "yy",
+      "className": "BattleDog",
+      "health": 7,
+      "trainingLvl": 0,
+      "damage": 5
+    }
+  ],
+  "item": [],
+  "dog": [
+    {
+      "name": "tre",
+      "className": "BattleDog",
+      "health": 14,
+      "trainingLvl": 0,
+      "damage": 5
+    }
+  ],
+  "dead": []
+}

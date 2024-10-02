@@ -3,7 +3,7 @@ import TribeMember from '../tribes.js';
 class TumbaUmba extends TribeMember {
   constructor(name) {
     super(name);
-    this.className = 'tumbaumba';
+    this.className = 'TumbaUmba';
     this.tools = [];
     this.dogs = [];
     this.secretPotato = '25 кг картошки';
