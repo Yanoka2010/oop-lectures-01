@@ -11,7 +11,7 @@ const getPath = () => path.resolve('data/units.json');
 
 const readData = () => JSON.parse(fs.readFileSync(getPath(), 'utf-8'));
 
-const updateJson = (data) => fs.writeFileSync(getPath(), JSON.stringify(data, null, 2), 'utf-8');
+const updateJSON = (data) => fs.writeFileSync(getPath(), JSON.stringify(data, null, 2), 'utf-8');
 
 const setObject = (member) => {
   const data = readData();
@@ -19,7 +19,7 @@ const setObject = (member) => {
     ? data.dog.push(member)
     : member.className === 'Tools' || member.className === 'Weapon'
       ? data.item.push(member) : data.alive.push(member);
-  updateJson(data);
+  updateJSON(data);
 };
 // setTribe();
 
@@ -29,7 +29,7 @@ const addItem = () => {
   const listOfNames = data.alive.map(({ name }) => name);
   const indexOfName = readlineSync.keyInSelect(listOfNames, 'Кому добавляем: ');
 
-  const person = data.alive.at(indexOfName);
+  let person = data.alive.at(indexOfName);
   let item;
   if (person.className === 'SigmaBoss') {
     const listOfItems = data.item.map(({ name }) => name);
@@ -48,8 +48,16 @@ const addItem = () => {
       item = listOfTolls.at(indexOfTolls);
     }
   }
-
-
+  person = backToClass(person);
+  item = backToClass(item);
+  if (person.className === 'SigmaBoss') {
+    person.addWeapon(item);
+  } else if (item.className === 'BattleDog') {
+    person.addDpg(item);
+  } else {
+    person.addTools(item);
+  }
+  updateJSON();
 };
 // ф-ция, которая терминально создает объект класса и сохраняет его
 const createData = () => {
@@ -86,12 +94,14 @@ const createData = () => {
   setObject(classObj);
 };
 // изменение данных о состоянии объекта
-const editTribe = (member) => {
+const editObject = (member) => {
   const data = readData();
-  const filtered = data.alive.filter(({ name }) => name !== member.name);
+  const keys = Object.keys(data);
+  const filtered = keys.map((key) => data[key].filter(({ name }) => name === member)).flat().at(0);
+  // const filtered = data.alive.filter(({ name }) => name !== member.name);
   filtered.push(member);
   data.alive = filtered;
-  updateJson(data);
+  updateJSON(data);
 };
 
 // удаление объекта
@@ -100,7 +110,7 @@ const setDeadTribe = (member) => {
   const filtered = data.alive.filter(({ name }) => name !== member.name);
   data.alive = filtered;
   data.dead.push(member);
-  updateJson(data);
+  updateJSON(data);
 };
 
 // возвращаем объект json в объект класса
@@ -108,7 +118,7 @@ const backToClass = (nameToFind) => {
   const data = readData();
   const objEntries = Object.entries(data);
   const found = objEntries.forEach(([, value]) => value.find((name) => name === nameToFind));
-  //const found = data.alive.find(({ name }) => name === nameToFind);
+  // const found = data.alive.find(({ name }) => name === nameToFind);
   let classObj;
   switch (found.className) {
     case 'TumbaUmba':
@@ -141,5 +151,5 @@ const backToClass = (nameToFind) => {
     : value);
 };
 export {
-  setObject, editTribe, setDeadTribe, backToClass, createData,
+  setObject, readData, editObject, setDeadTribe, backToClass, createData,
 };

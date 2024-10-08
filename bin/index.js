@@ -5,7 +5,9 @@ import Tools from '../practice/classes/tools.js';
 import BattleDogs from '../practice/classes/battle.js';
 import Weapon from '../practice/classes/weapon.js';
 import { createData } from '../practice/utility.js';
+import { editObject } from '../practice/utility.js';
 
+editObject();
 createData();
 // const Artem = new SigmaBoss('Artem');
 // const Ivan = new TumbaUmba('Ivan');
