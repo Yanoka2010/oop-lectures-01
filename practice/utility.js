@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import _ from 'lodash'
 import readlineSync from 'readline-sync';
 import TumbaUmba from './classes/tumba.js';
 import SigmaBoss from './classes/sigma.js';
@@ -26,39 +27,42 @@ const setObject = (member) => {
 const addItem = () => {
   const data = readData();
 
-  const listOfNames = data.alive.map(({ name }) => name);
+  const listOfNames = data.alive.map(({name}) => name);
   const indexOfName = readlineSync.keyInSelect(listOfNames, 'Кому добавляем: ');
-
+  
   let person = data.alive.at(indexOfName);
   let item;
-  if (person.className === 'SigmaBoss') {
-    const listOfItems = data.item.map(({ name }) => name);
+  if (person.className === 'sigmaboss') {
+    const listOfItems = data.items.map(({name}) => name)
     const indexOfItem = readlineSync.keyInSelect(listOfItems, 'Что добавляем: ');
-    item = data.item.at(indexOfItem);
+    item = data.items.at(indexOfItem)
+    // person.weapons.push(item);
   } else {
     const choice = readlineSync.keyInSelect(['собаки', 'инструменты'], 'Кого/что добавляем? ');
     if (choice === 0) {
-      const listOfDog = data.dog.map(({ name }) => name);
-      const indexOfDog = readlineSync.keyInSelect(listOfDog, 'Кто добавляем: ');
+      const listOfDogs = data.dog.map(({name}) => name)
+      const indexOfDog = readlineSync.keyInSelect(listOfDogs, 'Кого добавляем: ');
       item = data.dog.at(indexOfDog);
     } else {
-      const listOfTolls = data.item.filter(({ className }) => className === 'Tolls');
-      const listOfTollNames = listOfTolls.map(({ name }) => name);
-      const indexOfTolls = readlineSync.keyInSelect(listOfTollNames, 'Что добавляем: ');
-      item = listOfTolls.at(indexOfTolls);
+      const listOfTools = data.items.filter(({className}) => className === 'Tool');
+      const listOfToolNames = listOfTools.map(({name}) => name);
+      const indexOfTool = readlineSync.keyInSelect(listOfToolNames, 'Что добавляем: ');
+      item = listOfTools.at(indexOfTool);
     }
   }
-  person = backToClass(person);
-  item = backToClass(item);
+  person = backToClass(person.name);
+  item = backToClass(item.name);
+  console.log(person);
   if (person.className === 'SigmaBoss') {
     person.addWeapon(item);
   } else if (item.className === 'BattleDog') {
-    person.addDpg(item);
+    person.addDog(item);
   } else {
-    person.addTools(item);
+    person.addTool(item);
   }
-  updateJSON();
-};
+  editObject(person);
+}
+
 // ф-ция, которая терминально создает объект класса и сохраняет его
 const createData = () => {
   const classes = ['SigmaBoss', 'TumbaUmba', 'Tools', 'Weapon', 'BatlleDogs'];
@@ -93,15 +97,28 @@ const createData = () => {
   console.log(classObj);
   setObject(classObj);
 };
+const findByName = (data, nameToFind) => {
+  const keys = Object.keys(data);
+  const filtered = keys.flatMap((key) => data[key].filter(({name}) => name === nameToFind));
+  return filtered.at(0);
+}
+
 // изменение данных о состоянии объекта
 const editObject = (member) => {
   const data = readData();
-  const keys = Object.keys(data);
-  const filtered = keys.map((key) => data[key].filter(({ name }) => name === member)).flat().at(0);
-  // const filtered = data.alive.filter(({ name }) => name !== member.name);
+  //const keys = Object.keys(data);
+  //const filtered = keys.map((key) => data[key].filter(({ name }) => name === member)).flat().at(0);
+  const chota = findByName(data, member.name);
+  const status = (chota.className === 'SigmaBoss' || chota.className === 'TumbaUmba') 
+  ? 'alive'
+  : chota.className === 'BatlleDog'
+  ? 'dog'
+  : 'items';
+  const filtered = data[status].filter(({ name }) => name !== member.name);
   filtered.push(member);
   data.alive = filtered;
   updateJSON(data);
+  return member;
 };
 
 // удаление объекта
@@ -116,8 +133,9 @@ const setDeadTribe = (member) => {
 // возвращаем объект json в объект класса
 const backToClass = (nameToFind) => {
   const data = readData();
-  const objEntries = Object.entries(data);
-  const found = objEntries.forEach(([, value]) => value.find((name) => name === nameToFind));
+  const keys = Object.keys(data);
+  let found = keys.flatMap((key) => data[key].filter(({name}) => name === nameToFind));
+  found = found.at(0);
   // const found = data.alive.find(({ name }) => name === nameToFind);
   let classObj;
   switch (found.className) {
@@ -149,7 +167,8 @@ const backToClass = (nameToFind) => {
   entries.forEach(([key, value]) => classObj[key] = _.isObject(value)
     ? value.map((item) => backToClass(item))
     : value);
+  return classObj;
 };
 export {
-  setObject, readData, editObject, setDeadTribe, backToClass, createData,
+  setObject, readData,addItem, editObject, setDeadTribe, backToClass, createData,
 };
