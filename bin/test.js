@@ -1,4 +1,4 @@
-import { addItem, backToClass, readData } from '../practice/utility.js';
+import { addItem, backToClass, createData, readData } from '../practice/utility.js';
 
 // const data = readData();
 // // const search = Object.entries(data).forEach(([, value]) => value.find ((name) => name === 'motiga'));
@@ -11,7 +11,8 @@ import { addItem, backToClass, readData } from '../practice/utility.js';
 // }
 // // console.log(search);
 // const keys = Object.keys(data);
-// const filtered = keys.map((key) => data[key].filter(({ name }) => name === 'motiga')).flat();
+// const filtered= keys.map((key) => data[key].filter(({ name }) => name === 'motiga')).flat();
 // console.log(filtered);
 
-addItem();
+// addItem();
+createData();

@@ -1,4 +1,4 @@
-class BattleDogs {
+class BattleDog {
   constructor(name) {
     this.name = name;
     this.className = 'BattleDog';
@@ -36,4 +36,4 @@ class BattleDogs {
   }
 }
 
-export default BattleDogs;
+export default BattleDog;

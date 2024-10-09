@@ -4,8 +4,7 @@ import TumbaUmba from '../practice/classes/tumba.js';
 import Tools from '../practice/classes/tools.js';
 import BattleDogs from '../practice/classes/battle.js';
 import Weapon from '../practice/classes/weapon.js';
-import { createData } from '../practice/utility.js';
-import { editObject } from '../practice/utility.js';
+import { createData, editObject } from '../practice/utility.js';
 
 editObject();
 createData();

@@ -34,6 +34,15 @@
         }
       ],
       "secretPotato": "25 кг картошки"
+    },
+    {
+      "name": "Anya",
+      "age": 66,
+      "health": 77,
+      "damage": 7,
+      "iq": 10,
+      "className": "SigmaBoss",
+      "weapons": []
     }
   ],
   "item": [],
